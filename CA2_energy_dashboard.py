@@ -2,7 +2,6 @@ import streamlit as st
 import pandas as pd
 import altair as alt
 import numpy as np
-import matplotlib.pyplot as plt
 
 
 st.set_page_config(page_title="Energy Dashboard", layout="wide")
@@ -65,6 +64,6 @@ chart = alt.Chart(summary).mark_line(point=True).encode(
 )
 
 col_left, col_right = st.columns([2,1])
-with col_left: st.plotly_chart(fig, use_container_width=True)
+with col_left: st.altair_chart(chart, use_container_width=True)
 
 with col_right: st.dataframe(summary, use_container_width=True)
