@@ -4,7 +4,6 @@ import altair as alt
 
 st.set_page_config(page_title="Energy Dashboard", layout="wide")
 
-@st.cache_data
 def load_data():
     return pd.read_csv("ireland_energy.csv")
 
@@ -25,10 +24,33 @@ filtered = df[(df.country == country) & (df.year <= year)]
 METRICS = {
     "Domestic Supply": "domestic_supply",
     "Import Dependency": "import_dependency",
-    "% Renewable Production": "renew_prod_%"
+    "% Renewable Production": "renew_prod_%",
+    "% Non-Renewable Production": "no_renew_prod_%"
 }
 metric_label = st.selectbox("Select metric", list(METRICS.keys()))
 metric_col = METRICS[metric_label]
+
+row = df[(df["country"] == country) & (df["year"] == year)]
+
+def get_value(col):
+    if col not in row.columns or row.empty:
+        return np.nan
+    return row[col].mean()
+
+def fmt(label, val):
+    if pd.isna(val):
+        return "N/A"
+    if "%" in label:
+        return f"{val:.1f}%"
+    return f"{val:,.3f}"
+
+a, b = st.columns(2)
+c, d = st.columns(2)
+
+slots = [a, b, c, d]
+for (label, col), slot in zip(METRICS.items(), slots):
+    val = get_value(col)
+    slot.metric(label, fmt(label, val), delta=None, border=True)
 
 summary = (
     filtered.groupby("year")[metric_col]
