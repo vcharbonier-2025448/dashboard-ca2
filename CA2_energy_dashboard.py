@@ -10,7 +10,7 @@ st.set_page_config(page_title="Energy Dashboard", layout="wide")
 df= pd.read_csv("energy.csv")
 
 st.title("ENERGY TRANSITION: IRELAND AND URUGUAY")
-
+st.info("Uruguay shows consistently lower import dependency and higher renewable production, indicating a more advanced stage of energy transition compared to Ireland.")
 
 col1, col2 = st.columns(2)
 
@@ -63,3 +63,8 @@ chart = alt.Chart(summary).mark_line(point=True).encode(
     y=alt.Y(f"{metric_col}:Q", title=metric_col),
     tooltip=["year", metric_col]
 )
+
+col_left, col_right = st.columns([2,1])
+with col_left: st.plotly_chart(fig, use_container_width=True)
+
+with col_right: st.dataframe(summary, use_container_width=True)
