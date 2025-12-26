@@ -5,11 +5,7 @@ import numpy as np
 
 st.set_page_config(page_title="Energy Dashboard", layout="wide")
 
-def load_data():
-    return pd.read_csv("ireland_energy.csv")
-
-
-df = load_data()
+df= pd.read_csv("energy.csv")
 
 st.title("ENERGY TRANSITION: IRELAND AND URUGUAY")
 
@@ -65,5 +61,8 @@ chart = alt.Chart(summary).mark_line(point=True).encode(
     tooltip=["year", metric_col]
 )
 
-st.altair_chart(chart, use_container_width=True)
-st.dataframe(summary, use_container_width=True)
+with col1:
+    st.altair_chart(chart, use_container_width=True)
+
+with col2:
+    st.dataframe(summary, use_container_width=True)
