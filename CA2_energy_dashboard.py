@@ -4,19 +4,13 @@ import altair as alt
 import numpy as np
 import matplotlib.pyplot as plt
 
-# Importing standardscalar module 
-from sklearn.preprocessing import StandardScaler
-from sklearn.cluster import KMeans
-from sklearn.metrics import silhouette_score
-
-scalar = StandardScaler()
 
 st.set_page_config(page_title="Energy Dashboard", layout="wide")
 
 df= pd.read_csv("energy.csv")
-df_ie=pd.read_csv("ireland_energy.csv")
 
 st.title("ENERGY TRANSITION: IRELAND AND URUGUAY")
+
 
 col1, col2 = st.columns(2)
 
@@ -69,9 +63,3 @@ chart = alt.Chart(summary).mark_line(point=True).encode(
     y=alt.Y(f"{metric_col}:Q", title=metric_col),
     tooltip=["year", metric_col]
 )
-
-with col1:
-    st.altair_chart(chart, use_container_width=True)
-
-with col2:
-    st.dataframe(summary, use_container_width=True)
