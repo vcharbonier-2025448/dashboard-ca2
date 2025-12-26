@@ -7,9 +7,10 @@ st.set_page_config(page_title="Energy Dashboard", layout="wide")
 def load_data():
     return pd.read_csv("ireland_energy.csv")
 
+
 df = load_data()
 
-st.title("Energy Domestic Supply")
+st.title("ENERGY TRANSITION: IRELAND AND URUGUAY")
 
 col1, col2 = st.columns(2)
 
