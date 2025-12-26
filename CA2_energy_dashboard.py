@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import altair as alt
+import numpy as np
 
 st.set_page_config(page_title="Energy Dashboard", layout="wide")
 
@@ -23,8 +24,8 @@ with col2:
 filtered = df[(df.country == country) & (df.year <= year)]
 
 METRICS = {
-    "Domestic Supply": "domestic_supply",
     "Import Dependency": "import_dependency",
+    "Domestic Supply": "domestic_supply",
     "% Renewable Production": "renew_prod_%",
     "% Non-Renewable Production": "no_renew_prod_%"
 }
@@ -41,9 +42,8 @@ def get_value(col):
 def fmt(label, val):
     if pd.isna(val):
         return "N/A"
-    if "%" in label:
-        return f"{val:.1f}%"
-    return f"{val:,.3f}"
+    else
+    return f"{val:,.2f}%"
 
 a, b = st.columns(2)
 c, d = st.columns(2)
