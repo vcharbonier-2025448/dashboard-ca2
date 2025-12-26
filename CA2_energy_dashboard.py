@@ -42,8 +42,8 @@ def get_value(col):
 def fmt(label, val):
     if pd.isna(val):
         return "N/A"
-    else
-    return f"{val:,.2f}%"
+    else:
+        return f"{val:,.2f}%"
 
 a, b = st.columns(2)
 c, d = st.columns(2)
