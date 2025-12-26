@@ -3,8 +3,6 @@ import pandas as pd
 import altair as alt
 import numpy as np
 import matplotlib.pyplot as plt
-%matplotlib inline 
-
 
 # Importing standardscalar module 
 from sklearn.preprocessing import StandardScaler
