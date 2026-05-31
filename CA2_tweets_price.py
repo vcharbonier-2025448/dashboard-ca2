@@ -145,7 +145,7 @@ with tab3:
                "and horizons. Lower MAE/RMSE = better performance.")
 
     results = pd.DataFrame({
-        "Ticker": ["TSLA","AAPL","BA","DIS","AMZN"],
+        "Ticker": ["TSLA","TSLA","AAPL","AAPL","BA","BA","DIS","DIS","AMZN","AMZN"],
         "Model":  ["ARIMAX","LSTM"] * 5,
         "MAE t+1": [58.99, 24.56, 13.05, 3.50, 63.29, 25.79, 32.01, 21.74, 5.45, 2.66],
         "RMSE t+1": [67.74, 26.38, 14.59, 4.26, 68.00, 28.02, 36.27, 24.50, 6.32, 3.50],
