@@ -12,8 +12,7 @@ df["date"] = pd.to_datetime(df["date"])
 
 # Title 
 st.title("Stock Price and Sentiment Analysis")
-st.info("Analysis of 5 stocks (TSLA, AAPL, BA, DIS, AMZN) using Twitter sentiment "
-        "to forecast prices. Models: ARIMAX, LSTM - January to December 2020.")
+st.info("Analysis of 5 stocks (TSLA, AAPL, BA, DIS, AMZN) using Twitter sentiment to forecast prices. Models: ARIMAX, LSTM - January to December 2020.")
 
 # Filters
 col1, col2, col3a, col3b = st.columns(4)
@@ -66,14 +65,13 @@ with tab1:
     with col_left:
         st.plotly_chart(fig, use_container_width=True)
         st.caption(f"Figure 1: {metric_label} for {ticker} from "
-                   f"{start_month} to {end_month} 2020. "
-                   f"Dashed line marks the train/test split (Nov 1).")
+                   f"{start_month} to {end_month} 2020")
     with col_right:
         display_df = filtered[["date", metric_col]].copy()
         display_df["date"] = display_df["date"].dt.strftime("%Y-%m-%d")
         
         st.dataframe(display_df, use_container_width=True)
-        st.caption("Table 1: observations for selected metric.")
+  
 
     st.divider()
 
@@ -92,14 +90,12 @@ with tab1:
         legend=dict(x=0, y=1)
     )
     st.plotly_chart(fig2, use_container_width=True)
-    st.caption("Figure 2: Daily sentiment score (bars) overlaid with close price (line). ")
-
+   
 #Tab 2 - Forecast Results
 
 with tab2:
     st.subheader(f"Forecast Results — {ticker}")
-    st.caption("Forecasts generated using ARIMAX and LSTM models trained on Jan–Oct 2020, "
-               "evaluated on Nov–Dec 2020 test period.")
+ 
 
     # Load forecast CSVs if available, otherwise show placeholder
     df_arimax = pd.read_csv("forecast_arimax.csv")
@@ -118,7 +114,7 @@ with tab2:
     fig3.update_layout(title=f"Figure 3 — ARIMAX Forecast: {ticker}", 
                        template="plotly_white", xaxis_title="Date", yaxis_title="Close Price ($)")
     st.plotly_chart(fig3, use_container_width=True)
-    st.caption("Figure 3: ARIMAX rolling walk-forward forecast at t+1, t+3, t+5 horizons ")
+
 
     df_lstm = pd.read_csv("forecast_lstm.csv")
     df_lstm["date"] = pd.to_datetime(df_lstm["date"])
@@ -136,13 +132,11 @@ with tab2:
     fig4.update_layout(title=f"Figure 4 — LSTM Forecast: {ticker}",
                        template="plotly_white", xaxis_title="Date", yaxis_title="Close Price ($)")
     st.plotly_chart(fig4, use_container_width=True)
-    st.caption("Figure 4: LSTM direct multi-step forecast at t+1, t+3, t+5 horizons. ")
 
 # Tab 3 - Model Comparsion
 with tab3:
     st.subheader("Model Performance — MAE / RMSE")
-    st.caption("Table 2: Comparison of ARIMAX and LSTM forecast accuracy across all tickers and horizons. Lower MAE/RMSE = better performance.")
-
+    
     results = pd.DataFrame({
         "Ticker": ["TSLA","TSLA","AAPL","AAPL","BA","BA","DIS","DIS","AMZN","AMZN"],
         "Model":  ["ARIMAX","LSTM"] * 5,
@@ -155,7 +149,7 @@ with tab3:
 
     col_a, col_b = st.columns([1, 2])
     with col_a:
-        selected = st.radio("Filter by ticker", ["All"] + list(tickers_5 if 'tickers_5' in dir() else ["TSLA","AAPL","BA","DIS","AMZN"]))
+        selected = st.radio("Filter by ticker", ["All", "TSLA", "AAPL", "BA", "DIS", "AMZN"] )
     with col_b:
         show = results if selected == "All" else results[results["Ticker"] == selected]
         st.dataframe(show, use_container_width=True, hide_index=True)
@@ -166,7 +160,7 @@ with tab3:
                   title="Figure 5 — MAE t+1 by Model and Ticker",
                   color_discrete_sequence=["#1f77b4","#ff7f0e"])
     st.plotly_chart(fig5, use_container_width=True)
-    st.caption("Figure 5: MAE at t+1 horizon grouped by ticker and model. ")
+  
  
  # Bar chart of MAE comparison t+3
     fig6 = px.bar(results, x="Ticker", y="MAE t+3", color="Model",
@@ -174,7 +168,7 @@ with tab3:
                   title="Figure 6 — MAE t+3 by Model and Ticker",
                   color_discrete_sequence=["#1f77b4","#ff7f0e"])
     st.plotly_chart(fig6, use_container_width=True)
-    st.caption("Figure 6: MAE at t+3 horizon grouped by ticker and model. ")
+   
  
  # Bar chart of MAE comparison t+5
     fig7 = px.bar(results, x="Ticker", y="MAE t+5", color="Model",
@@ -182,4 +176,4 @@ with tab3:
                   title="Figure 7 — MAE t+3 by Model and Ticker",
                   color_discrete_sequence=["#1f77b4","#ff7f0e"])
     st.plotly_chart(fig7, use_container_width=True)
-    st.caption("Figure 7: MAE at t+5 horizon grouped by ticker and model. ")
+ 
