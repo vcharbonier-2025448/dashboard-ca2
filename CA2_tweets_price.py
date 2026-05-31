@@ -61,9 +61,6 @@ with tab1:
                   template="plotly_white",
                   color_discrete_sequence=['#0000ff'])
     fig.update_traces(line=dict(width=2))
-    fig.add_vline(x=pd.Timestamp("2020-11-01").timestamp()*1000,
-                  line_dash="dash", line_color="grey",
-                  annotation_text="Train/Test split")
 
     col_left, col_right = st.columns([2, 1])
     with col_left:
@@ -73,7 +70,7 @@ with tab1:
                    f"Dashed line marks the train/test split (Nov 1).")
     with col_right:
         st.dataframe(filtered[["date", metric_col]], use_container_width=True)
-        st.caption("Table 1: Last 20 observations for selected metric.")
+        st.caption("Table 1: observations for selected metric.")
 
     st.divider()
 
