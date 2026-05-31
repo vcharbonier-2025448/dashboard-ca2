@@ -80,13 +80,11 @@ with tab1:
     # Sentiment vs Price
     st.subheader("Sentiment vs Close Price")
     fig2 = go.Figure()
-    fig2.add_trace(go.Scatter(x=filtered["date"], y=filtered["close"],
-                               name="Close Price", yaxis="y1",
-                               line=dict(color="#1f77b4", width=2)))
-    fig2.add_trace(go.Bar(x=filtered["date"], y=filtered["avg_sentiment"],
-                           name="Sentiment", yaxis="y2",
-                           marker_color=filtered["avg_sentiment"].apply(
-                               lambda x: "#2ca02c" if x >= 0 else "#d62728")))
+    fig2.add_trace(go.Scatter(x=filtered["date"], y=filtered["close"], 
+                   name="Close Price", yaxis="y1", line=dict(color="#1f77b4", width=2)))
+    fig2.add_trace(go.Bar(x=filtered["date"], y=filtered["avg_sentiment"], 
+                   name="Sentiment", yaxis="y2", marker_color=filtered["avg_sentiment"].apply
+                   ( lambda x: "#2ca02c" if x >= 0 else "#d62728")))
     fig2.update_layout(
         template="plotly_white",
         yaxis=dict(title="Close Price ($)"),
@@ -95,3 +93,50 @@ with tab1:
     )
     st.plotly_chart(fig2, use_container_width=True)
     st.caption("Figure 2: Daily sentiment score (bars) overlaid with close price (line). ")
+
+#Tab 2 - Forecast Results
+
+with tab2:
+    st.subheader(f"Forecast Results — {ticker}")
+    st.caption("Forecasts generated using ARIMAX and LSTM models trained on Jan–Oct 2020, "
+               "evaluated on Nov–Dec 2020 test period.")
+
+    # Load forecast CSVs if available, otherwise show placeholder
+    try:
+        df_arimax = pd.read_csv("forecast_arimax.csv")
+        df_arimax["date"] = pd.to_datetime(df_arimax["date"])
+        df_arimax_t = df_arimax[df_arimax["ticker"] == ticker]
+
+        fig3 = go.Figure()
+        fig3.add_trace(go.Scatter(x=df_arimax_t["date"], y=df_arimax_t["actual"], 
+                       name="Actual", line=dict(color="red", width=2)))
+        fig3.add_trace(go.Scatter(x=df_arimax_t["date"], y=df_arimax_t["t1"], 
+                       name="t+1", line=dict(color="green", width=1.5)))
+        fig3.add_trace(go.Scatter(x=df_arimax_t["date"], y=df_arimax_t["t3"], 
+                       name="t+3", line=dict(color="orange", width=1.5)))
+        fig3.add_trace(go.Scatter(x=df_arimax_t["date"], y=df_arimax_t["t5"], 
+                       name="t+5", line=dict(color="blue", width=1.5)))
+        fig3.update_layout(title=f"Figure 3 — ARIMAX Forecast: {ticker}", 
+                           template="plotly_white", xaxis_title="Date", yaxis_title="Close Price ($)")
+        st.plotly_chart(fig3, use_container_width=True)
+        st.caption("Figure 3: ARIMAX rolling walk-forward forecast at t+1, t+3, t+5 horizons ")
+
+    try:
+        df_lstm = pd.read_csv("forecast_lstm.csv")
+        df_lstm["date"] = pd.to_datetime(df_lstm["date"])
+        df_lstm_t = df_lstm[df_lstm["ticker"] == ticker]
+
+        fig4 = go.Figure()
+        fig4.add_trace(go.Scatter(x=df_lstm_t["date"], y=df_lstm_t["actual"],
+                                   name="Actual", line=dict(color="red", width=2)))
+        fig4.add_trace(go.Scatter(x=df_lstm_t["date"], y=df_lstm_t["t1"],
+                                   name="t+1", line=dict(color="green", width=1.5)))
+        fig4.add_trace(go.Scatter(x=df_lstm_t["date"], y=df_lstm_t["t3"],
+                                   name="t+3", line=dict(color="orange", width=1.5)))
+        fig4.add_trace(go.Scatter(x=df_lstm_t["date"], y=df_lstm_t["t5"],
+                                   name="t+5", line=dict(color="blue", width=1.5)))
+        fig4.update_layout(title=f"Figure 4 — LSTM Forecast: {ticker}",
+                           template="plotly_white",
+                           xaxis_title="Date", yaxis_title="Close Price ($)")
+        st.plotly_chart(fig4, use_container_width=True)
+        st.caption("Figure 4: LSTM direct multi-step forecast at t+1, t+3, t+5 horizons. ")
