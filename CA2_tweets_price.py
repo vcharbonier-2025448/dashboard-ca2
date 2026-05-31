@@ -141,8 +141,7 @@ with tab2:
 # Tab 3 - Model Comparsion
 with tab3:
     st.subheader("Model Performance — MAE / RMSE")
-    st.caption("Table 2: Comparison of ARIMAX and LSTM forecast accuracy across all tickers "
-               "and horizons. Lower MAE/RMSE = better performance.")
+    st.caption("Table 2: Comparison of ARIMAX and LSTM forecast accuracy across all tickers and horizons. Lower MAE/RMSE = better performance.")
 
     results = pd.DataFrame({
         "Ticker": ["TSLA","TSLA","AAPL","AAPL","BA","BA","DIS","DIS","AMZN","AMZN"],
@@ -154,17 +153,25 @@ with tab3:
         "MAE t+5": [57.37, 36.56, 15.00, 2.59, 69.97, 39.59, 35.14, 27.49, 6.42, 4.73],
         "RMSE t+5": [65.39, 40.46, 16.17, 3.22, 72.30, 41.34, 38.20, 29.33, 7.13, 5.91]})
 
-    col_t, col_b = st.columns([1, 2])
-    with col_t:
+    col_a, col_b = st.columns([1, 2])
+    with col_a:
         selected = st.radio("Filter by ticker", ["All"] + list(tickers_5 if 'tickers_5' in dir() else ["TSLA","AAPL","BA","DIS","AMZN"]))
     with col_b:
         show = results if selected == "All" else results[results["Ticker"] == selected]
         st.dataframe(show, use_container_width=True, hide_index=True)
 
-    # Bar chart of MAE comparison
+    # Bar chart of MAE comparison t+1
     fig5 = px.bar(results, x="Ticker", y="MAE t+1", color="Model",
                   barmode="group", template="plotly_white",
                   title="Figure 5 — MAE t+1 by Model and Ticker",
                   color_discrete_sequence=["#1f77b4","#ff7f0e"])
     st.plotly_chart(fig5, use_container_width=True)
     st.caption("Figure 5: MAE at t+1 horizon grouped by ticker and model. ")
+ 
+ # Bar chart of MAE comparison t+3
+    fig6 = px.bar(results, x="Ticker", y="MAE t+3", color="Model",
+                  barmode="group", template="plotly_white",
+                  title="Figure 5 — MAE t+3 by Model and Ticker",
+                  color_discrete_sequence=["#1f77b4","#ff7f0e"])
+    st.plotly_chart(fig6, use_container_width=True)
+    st.caption("Figure 6: MAE at t+3 horizon grouped by ticker and model. ")
