@@ -55,7 +55,7 @@ with tab1:
 
     st.divider()
 
-    fig = px.line(filtered, x="date", y=metric_col, 
+    fig = px.line(filtered, x=filtered["date"], y=metric_col, 
                   title=f"Figure 1 - {metric_label} — {ticker}",
                   labels={"date": "Date", metric_col: metric_label},
                   template="plotly_white",
@@ -72,7 +72,7 @@ with tab1:
                    f"{start_month} to {end_month} 2020. "
                    f"Dashed line marks the train/test split (Nov 1).")
     with col_right:
-        st.dataframe(filtered[["date", metric_col]].tail(20), use_container_width=True)
+        st.dataframe(filtered[["date", metric_col]], use_container_width=True)
         st.caption("Table 1: Last 20 observations for selected metric.")
 
     st.divider()
