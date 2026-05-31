@@ -106,7 +106,7 @@ with tab2:
     df_arimax["date"] = pd.to_datetime(df_arimax["date"])
     df_arimax_t = df_arimax[df_arimax["ticker"] == ticker]
 
-    ig3 = go.Figure()
+    fig3 = go.Figure()
     fig3.add_trace(go.Scatter(x=df_arimax_t["date"], y=df_arimax_t["actual"], 
                    name="Actual", line=dict(color="red", width=2)))
     fig3.add_trace(go.Scatter(x=df_arimax_t["date"], y=df_arimax_t["t1"], 
