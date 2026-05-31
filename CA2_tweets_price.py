@@ -171,7 +171,15 @@ with tab3:
  # Bar chart of MAE comparison t+3
     fig6 = px.bar(results, x="Ticker", y="MAE t+3", color="Model",
                   barmode="group", template="plotly_white",
-                  title="Figure 5 — MAE t+3 by Model and Ticker",
+                  title="Figure 6 — MAE t+3 by Model and Ticker",
                   color_discrete_sequence=["#1f77b4","#ff7f0e"])
     st.plotly_chart(fig6, use_container_width=True)
     st.caption("Figure 6: MAE at t+3 horizon grouped by ticker and model. ")
+ 
+ # Bar chart of MAE comparison t+5
+    fig7 = px.bar(results, x="Ticker", y="MAE t+5", color="Model",
+                  barmode="group", template="plotly_white",
+                  title="Figure 7 — MAE t+3 by Model and Ticker",
+                  color_discrete_sequence=["#1f77b4","#ff7f0e"])
+    st.plotly_chart(fig7, use_container_width=True)
+    st.caption("Figure 7: MAE at t+5 horizon grouped by ticker and model. ")
