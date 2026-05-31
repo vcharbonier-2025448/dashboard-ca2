@@ -101,7 +101,7 @@ with tab2:
     df_arimax = pd.read_csv("forecast_arimax.csv")
     df_arimax["date"] = pd.to_datetime(df_arimax["date"])
     df_arimax_t = df_arimax[df_arimax["ticker"] == ticker]
-    df_arimax = df_arimax.fillna(0)
+    df_arimax_t = df_arimax_t.fillna(0)
 
     fig3 = go.Figure()
     fig3.add_trace(go.Scatter(x=df_arimax_t["date"], y=df_arimax_t["actual"], 
