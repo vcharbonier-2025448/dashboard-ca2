@@ -69,7 +69,10 @@ with tab1:
                    f"{start_month} to {end_month} 2020. "
                    f"Dashed line marks the train/test split (Nov 1).")
     with col_right:
-        st.dataframe(filtered[["date", metric_col]], use_container_width=True)
+        display_df = filtered[["date", metric_col]].copy()
+        display_df["date"] = display_df["date"].dt.strftime("%Y-%m-%d")
+        
+        st.dataframe(display_df, use_container_width=True)
         st.caption("Table 1: observations for selected metric.")
 
     st.divider()
