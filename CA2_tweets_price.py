@@ -98,7 +98,7 @@ with tab2:
  
 
     # Load forecast CSVs if available, otherwise show placeholder
-    df_arimax = pd.read_csv("forecast_arimax.csv")
+    df_arimax = pd.read_csv("forecast_arimax")
     df_arimax["date"] = pd.to_datetime(df_arimax["date"])
     df_arimax_t = df_arimax[df_arimax["ticker"] == ticker]
     df_arimax_t = df_arimax_t.fillna(0)
