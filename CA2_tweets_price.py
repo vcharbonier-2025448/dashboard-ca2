@@ -27,7 +27,7 @@ months = {
 	"January": 1, "February": 2, "March": 3, "April": 4,"May": 5, "June": 6, "July": 7, "August": 8, "September": 9, "October": 10, "November": 11, "December": 12}
     
 with col3a: start_month = st.selectbox("From month",  list(months.keys()), index=0)
-with col3b: end_month = st.selectbox("To month",  list(months.keys()), index=0)
+with col3b: end_month = st.selectbox("To month",  list(months.keys()), index=11)
 
 filtered = df[
     (df["ticker"] == ticker) &
@@ -102,7 +102,6 @@ with tab2:
     df_arimax["date"] = pd.to_datetime(df_arimax["date"])
     df_arimax["ticker"] = df_arimax["ticker"].str.strip().str.upper()
     df_arimax_t = df_arimax[df_arimax["ticker"] == ticker]
-    df_arimax_t = df_arimax_t.fillna(0)
 
     fig3 = go.Figure()
     fig3.add_trace(go.Scatter(x=df_arimax_t["date"], y=df_arimax_t["actual"], 
