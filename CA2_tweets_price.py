@@ -137,3 +137,35 @@ with tab2:
                        template="plotly_white", xaxis_title="Date", yaxis_title="Close Price ($)")
     st.plotly_chart(fig4, use_container_width=True)
     st.caption("Figure 4: LSTM direct multi-step forecast at t+1, t+3, t+5 horizons. ")
+
+# Tab 3 - Model Comparsion
+with tab3:
+    st.subheader("Model Performance — MAE / RMSE")
+    st.caption("Table 2: Comparison of ARIMAX and LSTM forecast accuracy across all tickers "
+               "and horizons. Lower MAE/RMSE = better performance.")
+
+    results = pd.DataFrame({
+        "Ticker": ["TSLA","AAPL","BA","DIS","AMZN"],
+        "Model":  ["ARIMAX","LSTM"] * 5,
+        "MAE t+1":  [58.99, 24.56], [13.05, 3.50],[63.29, 25.79],[32.01, 21.74],[5.45, 2.66]
+        "RMSE t+1": [67.74, 26.38], [14.59, 4.26],[68.00, 28.02],[36.27, 24.50],[6.32, 3.50]
+        "MAE t+3":  [60.88, 39.91], [14.35, 4.26],[66.90, 32.08],[33.81, 22.57],[6.14, 2.63]
+        "RMSE t+3": [68.90, 46.36], [15.58, 5.44],[70.41, 34.30],[37.43, 24.99],[6.93, 3.12]
+        "MAE t+5":  [57.37, 36.56], [15.00, 2.59],[69.97, 39.59],[35.14, 27.49],[6.42, 4.73]
+        "RMSE t+5": [65.39, 40.46], [16.17, 3.22],[72.30, 41.34],[38.20, 29.33],[7.13, 5.91]
+    })
+
+    col_t, col_b = st.columns([1, 2])
+    with col_t:
+        selected = st.radio("Filter by ticker", ["All"] + list(tickers_5 if 'tickers_5' in dir() else ["TSLA","AAPL","BA","DIS","AMZN"]))
+    with col_b:
+        show = results if selected == "All" else results[results["Ticker"] == selected]
+        st.dataframe(show, use_container_width=True, hide_index=True)
+
+    # Bar chart of MAE comparison
+    fig5 = px.bar(results, x="Ticker", y="MAE t+1", color="Model",
+                  barmode="group", template="plotly_white",
+                  title="Figure 5 — MAE t+1 by Model and Ticker",
+                  color_discrete_sequence=["#1f77b4","#ff7f0e"])
+    st.plotly_chart(fig5, use_container_width=True)
+    st.caption("Figure 5: MAE at t+1 horizon grouped by ticker and model. "
