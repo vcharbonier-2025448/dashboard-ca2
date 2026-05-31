@@ -27,7 +27,7 @@ months = {
 	"January": 1, "February": 2, "March": 3, "April": 4,"May": 5, "June": 6, "July": 7, "August": 8, "September": 9, "October": 10, "November": 11, "December": 12}
     
 with col3a: start_month = st.selectbox("From month",  list(months.keys()), index=0)
-with col3b: end_month = st.selectbox("To month",  list(months.keys()), index=11)
+with col3b: end_month = st.selectbox("To month",  list(months.keys()), index=0)
 
 filtered = df[
     (df["ticker"] == ticker) &
@@ -97,11 +97,11 @@ with tab2:
     st.subheader(f"Forecast Results — {ticker}")
  
 
-    # Load forecast CSVs if available, otherwise show placeholder
+    # Load forecast CSVs
     df_arimax = pd.read_csv("forecast_arimax.csv")
     df_arimax["date"] = pd.to_datetime(df_arimax["date"])
-    df_arimax["ticker"] = df_arimax["ticker"].str.strip().str.upper()
     df_arimax_t = df_arimax[df_arimax["ticker"] == ticker]
+    df_arimax_t = df_arimax_t.fillna(0)
 
     fig3 = go.Figure()
     fig3.add_trace(go.Scatter(x=df_arimax_t["date"], y=df_arimax_t["actual"], 
@@ -139,14 +139,14 @@ with tab3:
     st.subheader("Model Performance — MAE / RMSE")
     
     results = pd.DataFrame({
-        "Ticker": ["TSLA","TSLA","AAPL","AAPL","BA","BA","DIS","DIS","AMZN","AMZN"],
+        "Ticker": ["TSLA","TSLA","AAPL","AAPL","BA",  "BA",  "DIS","DIS",  "AMZN","AMZN"],
         "Model":  ["ARIMAX","LSTM"] * 5,
-        "MAE t+1": [58.99, 24.56, 13.05, 3.50, 63.29, 25.79, 32.01, 21.74, 5.45, 2.66],
-        "RMSE t+1": [67.74, 26.38, 14.59, 4.26, 68.00, 28.02, 36.27, 24.50, 6.32, 3.50],
-        "MAE t+3": [60.88, 39.91, 14.35, 4.26, 66.90, 32.08, 33.81, 22.57, 6.14, 2.63],
-        "RMSE t+3": [68.90, 46.36, 15.58, 5.44, 70.41, 34.30, 37.43, 24.99, 6.93, 3.12],
-        "MAE t+5": [57.37, 36.56, 15.00, 2.59, 69.97, 39.59, 35.14, 27.49, 6.42, 4.73],
-        "RMSE t+5": [65.39, 40.46, 16.17, 3.22, 72.30, 41.34, 38.20, 29.33, 7.13, 5.91]})
+        "MAE t+1":  [22.21, 36.96, 3.25, 3.69, 24.64, 21.79, 21.17, 22.49, 2.81, 2.58],
+        "RMSE t+1": [23.53, 43.67, 4.18, 4.74, 27.07, 25.28, 24.32, 25.65, 3.60, 3.39],
+        "MAE t+3":  [35.40, 35.66, 3.77, 5.61, 11.30, 54.78, 25.85, 22.62, 5.63, 9.05],
+        "RMSE t+3": [40.31, 40.91, 4.59, 6.49, 16.66, 57.00, 28.26, 24.59, 6.26, 6.68],
+        "MAE t+5":  [78.08, 45.35, 4.21, 31.68, 39.13,54.46, 24.70, 31.11, 8.75, 38.48],
+        "RMSE t+5": [83.73, 51.86, 5.00, 32.06, 41.78,56.51, 27.58, 33.81, 9.22, 38.58]})
 
     col_a, col_b = st.columns([1, 2])
     with col_a:
