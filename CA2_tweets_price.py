@@ -56,12 +56,12 @@ with tab1:
     st.divider()
 
     fig = px.line(filtered, x="date", y=metric_col, 
-        title=f"Figure 1 - {metric_label} — {ticker}",
-        labels={"date": "Date", metric_col: metric_label},
-        template="plotly_white",
-        color_discrete_sequence=['#0000ff'])
+                  title=f"Figure 1 - {metric_label} — {ticker}",
+                  labels={"date": "Date", metric_col: metric_label},
+                  template="plotly_white",
+                  color_discrete_sequence=['#0000ff'])
     fig.update_traces(line=dict(width=2))
-fig.add_vline(x=pd.Timestamp("2020-11-01").timestamp()*1000,
+    fig.add_vline(x=pd.Timestamp("2020-11-01").timestamp()*1000,
                   line_dash="dash", line_color="grey",
                   annotation_text="Train/Test split")
 
