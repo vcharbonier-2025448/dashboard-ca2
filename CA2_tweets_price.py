@@ -102,7 +102,6 @@ with tab2:
                "evaluated on Nov–Dec 2020 test period.")
 
     # Load forecast CSVs if available, otherwise show placeholder
-    try:
         df_arimax = pd.read_csv("forecast_arimax.csv")
         df_arimax["date"] = pd.to_datetime(df_arimax["date"])
         df_arimax_t = df_arimax[df_arimax["ticker"] == ticker]
@@ -121,7 +120,6 @@ with tab2:
         st.plotly_chart(fig3, use_container_width=True)
         st.caption("Figure 3: ARIMAX rolling walk-forward forecast at t+1, t+3, t+5 horizons ")
 
-    try:
         df_lstm = pd.read_csv("forecast_lstm.csv")
         df_lstm["date"] = pd.to_datetime(df_lstm["date"])
         df_lstm_t = df_lstm[df_lstm["ticker"] == ticker]
