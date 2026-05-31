@@ -117,8 +117,8 @@ with tab2:
                    name="t+5", line=dict(color="blue", width=1.5)))
     fig3.update_layout(title=f"Figure 3 — ARIMAX Forecast: {ticker}", 
                        template="plotly_white", xaxis_title="Date", yaxis_title="Close Price ($)")
-   st.plotly_chart(fig3, use_container_width=True)
-   st.caption("Figure 3: ARIMAX rolling walk-forward forecast at t+1, t+3, t+5 horizons ")
+    st.plotly_chart(fig3, use_container_width=True)
+    st.caption("Figure 3: ARIMAX rolling walk-forward forecast at t+1, t+3, t+5 horizons ")
 
     df_lstm = pd.read_csv("forecast_lstm.csv")
     df_lstm["date"] = pd.to_datetime(df_lstm["date"])
