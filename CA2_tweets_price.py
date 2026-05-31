@@ -167,4 +167,4 @@ with tab3:
                   title="Figure 5 — MAE t+1 by Model and Ticker",
                   color_discrete_sequence=["#1f77b4","#ff7f0e"])
     st.plotly_chart(fig5, use_container_width=True)
-    st.caption("Figure 5: MAE at t+1 horizon grouped by ticker and model. "
+    st.caption("Figure 5: MAE at t+1 horizon grouped by ticker and model. ")
