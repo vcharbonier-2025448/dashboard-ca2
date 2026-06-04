@@ -167,7 +167,7 @@ with tab3:
     fig6 = px.bar(results, x="Ticker", y="MAE t+3", color="Model",
                   barmode="group", template="plotly_white",
                   title="Figure 6 — MAE t+3 by Model and Ticker",
-                  color_discrete_sequence=["#1f77b4","#ff7f0e"])
+                  color_discrete_sequence=["#1f77b4","#ff7f0e", "#2ca02c"])
     st.plotly_chart(fig6, use_container_width=True)
    
  
@@ -175,6 +175,6 @@ with tab3:
     fig7 = px.bar(results, x="Ticker", y="MAE t+5", color="Model",
                   barmode="group", template="plotly_white",
                   title="Figure 7 — MAE t+3 by Model and Ticker",
-                  color_discrete_sequence=["#1f77b4","#ff7f0e"])
+                  color_discrete_sequence=["#1f77b4","#ff7f0e", "#2ca02c"])
     st.plotly_chart(fig7, use_container_width=True)
  
